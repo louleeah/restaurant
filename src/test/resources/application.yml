@@ -4,7 +4,7 @@ spring:
       ddl-auto: none
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: "jdbc:postgresql://localhost:5432/restaurant"
+    url: "jdbc:postgresql://localhost:5431/restaurant"
     username: restaurant
     password: superstrongandsecret
   flyway:

@@ -35,7 +35,7 @@ class ItemService implements ItemInterface {
     }
 
     public void deleteItem(Long id) throws ResourceNotFoundException {
-        Item item = repo.findById(id).orElseThrow(() ->
+        var item = repo.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Menu item not found for id:: " + id));
 
         repo.delete(item);

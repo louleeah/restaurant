@@ -30,7 +30,12 @@ public class User {
     @OneToMany(mappedBy = "id")
     private List<Order> orders = new ArrayList<>();
 
-    User(String code, String name) {
+    @Override
+    public String toString(){
+        return "name: " + name;
+    }
+
+    public User(String code, String name) {
         this.code = code;
         this.name = name;
     }

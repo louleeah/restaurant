@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "order_item")
@@ -34,7 +35,31 @@ class OrderItem {
         this.pieces = pieces;
     }
 
-    Float GetPrice() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        OrderItem that = (OrderItem) o;
+        return Objects.equals(item, that.item) &&
+                Objects.equals(order, that.order) &&
+                Objects.equals(pieces, that.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(item, order, pieces);
+    }
+
+    @Override
+    public String toString(){
+        return "item: " + item.toString()
+                + "pieces: " + pieces.toString();
+    }
+
+    Float getPrice() {
         return this.item.getPrice() * this.pieces;
     }
 }

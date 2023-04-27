@@ -2,11 +2,10 @@ package com.training.restaurant.item;
 
 import com.training.restaurant.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +13,14 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class ItemTest {
+@ExtendWith(MockitoExtension.class)
+class ItemTest {
 
     @Mock
     private ItemRepo repo;
@@ -47,6 +45,7 @@ public class ItemTest {
         categories.add("extras");
 
         when(repo.getAllByCategoryIsIn(categories)).thenReturn(menu);
+
         assertThat(itemService.getMenu("all"), equalTo(menu));
     }
 
@@ -61,6 +60,7 @@ public class ItemTest {
         categories.add("drinks");
 
         when(repo.getAllByCategoryIsIn(categories)).thenReturn(menu);
+
         assertThat(itemService.getMenu("drinks"), equalTo(menu));
     }
 
@@ -70,6 +70,7 @@ public class ItemTest {
         categories.add("drinks");
 
         when(repo.getAllByCategoryIsIn(categories)).thenReturn(List.of());
+
         assertThat("no drinks in menu", itemService.getMenu("drinks").isEmpty());
     }
 

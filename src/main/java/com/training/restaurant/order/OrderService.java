@@ -1,9 +1,7 @@
 package com.training.restaurant.order;
 
 import com.training.restaurant.ResourceNotFoundException;
-import com.training.restaurant.item.Item;
 import com.training.restaurant.item.ItemInterface;
-import com.training.restaurant.user.User;
 import com.training.restaurant.user.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +22,11 @@ class OrderService implements OrderInterface{
 
     public Order createOrder(Order userOrder) throws ResourceNotFoundException {
         String userCode = userOrder.getUserCode();
-        User user = userInterface.getByCode(userCode);
-        Order order = new Order(user);
+        var user = userInterface.getByCode(userCode);
+        var order = new Order(user);
 
         for (Map.Entry<Long, Integer> menuItem : userOrder.getMenuItems().entrySet()) {
-            Item item = itemInterface.getItem(menuItem.getKey());
+            var item = itemInterface.getItem(menuItem.getKey());
             order.addOrderItem(item, menuItem.getValue());
         }
 
@@ -39,7 +37,7 @@ class OrderService implements OrderInterface{
 
     public Order getOrder (Long id) throws ResourceNotFoundException {
         return repo.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("Order not found for id::" + id));
+                new ResourceNotFoundException("Order not found for id:: " + id));
     }
 
     public List<Order> getOrders () {
@@ -47,11 +45,11 @@ class OrderService implements OrderInterface{
     }
 
     public Order updateOrderItems(Long id, Map<Long, Integer> menuItems) throws ResourceNotFoundException {
-        Order order = repo.getReferenceById(id);
+        var order = repo.getReferenceById(id);
 
         order.setOrderItems(null);
         for (Map.Entry<Long, Integer> menuItem : menuItems.entrySet()) {
-            Item item = itemInterface.getItem(menuItem.getKey());
+            var item = itemInterface.getItem(menuItem.getKey());
             order.addOrderItem(item, menuItem.getValue());
         }
 
